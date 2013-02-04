@@ -21,7 +21,6 @@ following are required to run asmbl-comp.
   * the 'Graph' Perl module
   * NCBI BLAST+
 
---------------------------------------------------------------------------------
 Running asmbl-comp is as simple as running `make'. However, you will need to
 adjust some values in the makefile, either by manually editing the file or by
 changing these values on the command line (preferred).
@@ -41,6 +40,8 @@ using 4 cores. The command would like like this.
 
   make -f $BIN/Makefile -s -j 2 BIN=$BIN EVALUE=1e-15 BLASTTHREADS=4
 
+The results will be written to a file name `seq_clust.txt', and a summary report
+will be printed to the terminal.
 
 If you have any questions, feel free to contact the author by email at
 daniel.standage@gmail.com.
