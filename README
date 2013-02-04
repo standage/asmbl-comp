@@ -1,0 +1,47 @@
+Copyright (c) 2012-2013, Daniel S. Standage <daniel.standage@gmail.com>
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+ 
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+
+The asmbl-comp package contains scripts for comparing two assemblies. The
+following are required to run asmbl-comp.
+
+  * GNU make
+  * a Perl interpreter
+  * the 'Graph' Perl module
+  * NCBI BLAST+
+
+--------------------------------------------------------------------------------
+Running asmbl-comp is as simple as running `make'. However, you will need to
+adjust some values in the makefile, either by manually editing the file or by
+changing these values on the command line (preferred).
+
+If $BIN is the asmbl-comp directory, $WD is your working directory, and
+`one.fasta' and `two.fasta' are the assemblies (in the working directory) you
+want to compare, the commands you need to run will look something like this.
+
+  cd $WD
+  make -f $BIN/Makefile -s BIN=$BIN EVALUE=1e-15
+
+To take advantage of multiple cores, use make's `-j' option (which specifies how
+many tasks can run concurrently) and the BLASTTHREADS option (which indicates how
+many cores/threads each BLAST process should use). For example, if I had 8 cores
+available, I might want to run 2 processes concurrently, with each BLAST process
+using 4 cores. The command would like like this.
+
+  make -f $BIN/Makefile -s -j 2 BIN=$BIN EVALUE=1e-15 BLASTTHREADS=4
+
+
+If you have any questions, feel free to contact the author by email at
+daniel.standage@gmail.com.
+
