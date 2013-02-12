@@ -24,13 +24,16 @@ $(B).blastn:		$(Y).fasta $(X).fasta $(X).fasta.nin
 			blastn -query $(Y).fasta -db $(X).fasta -out $(B).blastn -evalue $(EVALUE) -num_threads $(BLASTTHREADS) -outfmt 6
 
 $(A).edges:		$(A).blastn
-			perl $(BIN)/blasttab-to-edges.pl $(X) $(Y) < $(A).blastn > $(A).edges
+			perl $(BIN)/blasttab-to-edges.pl $(X) $(Y) < $(A).blastn > $(A).edges.temp
+			mv $(A).edges.temp $(A).edges
 
 $(B).edges:		$(B).blastn
-			perl $(BIN)/blasttab-to-edges.pl $(Y) $(X) < $(B).blastn > $(B).edges
+			perl $(BIN)/blasttab-to-edges.pl $(Y) $(X) < $(B).blastn > $(B).edges.temp
+			mv $(B).edges.temp $(B).edges
 
 seq_clust.txt:		$(A).edges $(B).edges
-			perl $(BIN)/build-graph.pl --xlabel=$(X) --ylabel=$(Y) $(A).edges $(B).edges > seq_clust.txt 2> seq_clust.log
+			perl $(BIN)/build-graph.pl --xlabel=$(X) --ylabel=$(Y) $(A).edges $(B).edges > seq_clust.txt.temp 2> seq_clust.log
+			mv seq_clust.txt.temp seq_clust.txt
 
 seq_clust_reports:	seq_clust.txt
 			echo  "Breakdown of cluster types:"
